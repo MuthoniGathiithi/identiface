@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup form</title>
+
+
+    <style>
+
+       .body{
+        background-color: black;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height :100vh;
+
+          }
+
+    </style>
+</head>
+
+
+<body>
+    <div> 
+
+    <h1> Join IdentiFace</h1>
+
+     <form action="{% url 'signup" method="post"    >
+
+    <label for="firstname">First name</label>
+    <input type="text" id="first-name" name="first_name" placeholder="Enter your first name" required>
+
+   
+    <label for="last-name">last  name</label>
+    <input type="text" id="last-name" name="last_name" placeholder="Enter your last name" required>
+
+    <label for="email"> Email</label>
+    <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" placeholder="Enter password" required>
+
+    <label for="confirm-password">Confirm Password</label>
+    <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm password" required>
+
+  
+
+    <button type="submit">Sign Up</button>
+
+
+   
+
+
+     </form>
+
+
+    </div>
+
+
+
+
+
+</body>
+
+
+</html>
