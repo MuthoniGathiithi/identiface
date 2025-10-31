@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,12 @@
 
 
 
+.hero, .hero-text, .hero-image {
+  position: relative;
+  z-index: 1;
+}
+
+
 
 * {
   margin: 0;
@@ -15,25 +22,32 @@
 
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-    background-color:#dbe8f6;
+    background-color:none;
 }
 
 .header {
-  background-color: #5450d6;
-
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    margin  :0;
-    padding :0;
+     background-color: rgba(255, 255, 255, 0);
+    font-family: poppins, sans-serif;
     position:sticky;
     top:0;
     padding: 15px 40px;
+    backdrop-filter: blur(8px);
+    border-bottom:none;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0);
+    border-radius: 0;
+    z-index: 100;
+
 }
 .container {
     display: flex;
     justify-content:space-between;
     align-items: center;
-    padding: 15px 40 px;
+    padding: 15px 40px;
     margin  :   auto;
     max-width: 1200px;
 
@@ -51,18 +65,529 @@ body {
 }
 .navbar ul li a {
     text-decoration: none;
-    color: white;
+    color: rgb(0, 0, 0);
     font-weight: 500;
     transition: color 0.3s ease;
 
 }
 .navbar ul li a:hover{
-    color:black ;
+    color:rgb(108, 18, 211) ;
 
 }
 .active {
   font-weight: 700;
   border-bottom: 2px solid white;
+}
+
+.hero {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 100px;
+  background:transparent;
+  /* or something £background: linear-gradient(to right, #f5f7fa, #dbe8f6);like */
+  min-height: 90vh;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  text-align: center;
+  gap: 40px;
+  place-items: start center;
+  
+}
+
+* Typewriter effect */
+.typing {
+  display: inline-block;
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  /* responsive large title */
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+
+  /* typewriter essentials */
+  white-space: nowrap;            /* keep on one line */
+  overflow: hidden;               /* hide as it types */
+  border-right: 3px solid #cfe0ff;/* blinking cursor */
+  width: 0;                       /* start hidden */
+
+  /* animate width to the text length (ch = “character” width) */
+  animation:
+    typing 2.8s steps(13, end) 0.2s forwards,
+    blink .8s step-end infinite;
+    
+}
+
+/* Adjust the number 13 to match your characters (IdentiFace AI = 13 incl. space) */
+@keyframes typing {
+  from { width: 0; }
+  to   { width: 13ch; }           /* length of “IdentiFace AI” */
+}
+
+/* Blinking cursor */
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+/* Optional: fine-tune paragraph color on overlay */
+.hero-text p { color: #e7ecff; max-width: 680px; margin: 14px auto 0; }
+
+
+
+
+
+
+
+.hero-text {
+  flex: 1;
+  max-width: 500px;
+}
+
+.hero-text h1 {
+  font-size: 3.5rem;
+  color: black;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.hero-text p {
+  font-size: 1.2rem;
+  color: black ;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.cta-btn {
+  background-color: #5450d6;
+  color: white;
+  padding: 14px 32px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cta-btn:hover {
+  background-color: #3a37b1;
+  transform: scale(1.05);
+}
+
+.hero-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-image img {
+  width: 70%;
+  max-width: 320px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transition: transform 0.4s ease;
+  height: auto;
+}
+
+.hero-image img:hover {
+  transform: scale(1.03);
+}
+
+.testimonials {
+  padding: 48px 0 32px 0;
+background: #f8fafd;
+  text-align: center;
+}
+.testimonials h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2a2a72;
+  margin-bottom: 32px;
+  font-family: 'Poppins', sans-serif;
+}
+.testimonials-cards {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.testimonial-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(80,80,140,.10);
+  padding: 28px 22px 20px 22px;
+  max-width: 340px;
+  min-width: 240px;
+  flex: 1 1 240px;
+  margin-bottom: 20px;
+}
+.testimonial-message {
+  font-size: 1.05rem;
+  font-style: italic;
+  color: #333;
+  margin-bottom: 18px;
+}
+.testimonial-name {
+  display: block;
+  font-weight: 600;
+  color: #5450d6;
+  letter-spacing: 0.6px;
+  margin-bottom: 0px;
+}
+.testimonial-title {
+  display: block;
+  font-size: 0.94rem;
+  color: #888;
+  margin-bottom: 0;
+}
+
+
+.footer-social ul {
+  display: flex;
+  gap: 18px;
+}
+
+.social-icon-bg {
+  background: #23243a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  transition: background 0.22s, box-shadow 0.22s;
+  box-shadow: 0 2px 8px rgba(40,40,80,0.09);
+}
+.social-icon {
+  width: 22px;
+  height: 22px;
+  filter: none;
+}
+
+.social-icon-bg:hover {
+  background: #5450d6; /* or the actual brand color! */
+}
+
+.footer-social a {
+  display: inline-block;
+}
+
+
+
+
+
+
+/* How It Works Section */
+.how-it-works {
+  padding: 80px 40px;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(248, 250, 253, 0.98) 0%, rgba(255, 255, 255, 0.95) 100%);
+  font-family: 'Poppins', sans-serif;
+
+
+
+}
+
+/*.how-it-works::before {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  top: 50%;
+  left: -150px;
+  transform: translateY(-50%);
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.7;
+  background: rgba(0, 0, 0, 0.50);
+}*/
+
+.how-it-works h2 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #2a2a72;
+  text-align: center;
+  margin-bottom: 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.how-it-works h2::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #5450d6, #8b87ff);
+  margin: 16px auto 0;
+  border-radius: 2px;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.step {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 40px 32px;
+  box-shadow: 0 4px 20px rgba(84, 80, 214, 0.12);
+  position: relative;
+  border: 1px solid rgba(84, 80, 214, 0.1);
+}
+
+.step h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2a2a72;
+  margin-bottom: 16px;
+  text-transform: capitalize;
+  position: relative;
+  padding-left: 0px;
+}
+
+/*.step h3::before {
+  content: attr(data-step);
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  background: #5450d6;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(84, 80, 214, 0.3);
+}*/
+
+
+
+.step p {
+  font-size: 1.05rem;
+  color: #555;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Connecting lines between steps (desktop only) */
+@media (min-width: 1024px) {
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(84, 80, 214, 0.3) 15%, 
+      rgba(84, 80, 214, 0.3) 85%, 
+      transparent 100%
+    );
+    z-index: 0;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .how-it-works {
+    padding: 60px 30px;
+  }
+
+  .how-it-works h2 {
+    font-size: 2.2rem;
+    margin-bottom: 40px;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .how-it-works {
+    padding: 50px 20px;
+  }
+
+  .how-it-works h2 {
+    font-size: 1.9rem;
+  }
+
+  .step {
+    padding: 32px 24px;
+  }
+
+  .step h3 {
+    font-size: 1.3rem;
+  }
+
+  .step p {
+    font-size: 1rem;
+  }
+}
+
+.step-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 18px;
+  width: 44px;
+  height: 44px;
+  background: #5450d6c2;
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(84, 80, 214, 0.22);
+  margin-left: auto;
+  margin-right: auto;
+}
+.step h3 {
+  padding-left: 0;
+  text-align: center;
+}
+.step p {
+  text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- Modern Footer Styles --- */
+.footer {
+  background: black;
+  color: #f1f1f1;
+  padding-top: 36px;
+  padding-bottom: 16px;
+  font-family: 'Poppins', sans-serif;
+}
+.footer-main {
+  display: flex;
+  gap: 40px;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto 24px auto;
+  padding: 0 36px;
+}
+.footer-nav ul, .footer-policies ul, .footer-social ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.footer-nav ul li, .footer-policies ul li, .footer-social ul li {
+  margin-bottom: 12px;
+}
+.footer-nav a, .footer-policies a {
+  color: #d2d6de;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.2s;
+  opacity: 0.9;
+}
+.footer-nav a:hover, .footer-policies a:hover {
+  color: #fff;
+  opacity: 1;
+  text-decoration: underline;
+}
+.footer-social ul {
+  display: flex;
+  gap: 18px;
+}
+.social-icon-bg {
+  background: #23243a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  transition: background 0.22s, box-shadow 0.22s;
+  box-shadow: 0 2px 8px rgba(40,40,80,0.09);
+}
+.social-icon {
+  width: 22px;
+  height: 22px;
+  filter: none;
+}
+.social-icon-bg:hover {
+  background: #5450d6;
+}
+.footer-copy {
+  text-align: center;
+  color: #adadad;
+  font-size: 0.98rem;
+  margin-top: 20px;
+  opacity: 0.7;
+}
+@media (max-width: 950px) {
+  .footer-main {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 0 10px;
+  }
+  .footer-nav, .footer-policies, .footer-social {
+    margin-bottom: 16px;
+  }
 }
 
 
@@ -83,19 +608,150 @@ body {
 
             <nav class="navbar">
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">How It Works</a></li>
-                    <li><a href="#">Login</a></li>
-                    <li><a href="#">Sign Up</a></li>
+                    <li><a href="#"><b>Home</b></a></li>
+                    <li><a href="#how-it-works"><b>How It Works</b></a></li>
+                    <li><a href="#testimonials"><b>Testimonials</b></a></li>
+                    <li><a href="{% url 'login' %}"><b>Login</b></a></li>
+                    <li><a href="{% url 'signup' %}"><b>Sign Up</b></a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
+<section class="hero">
+  <div class="hero-text">
+    <h1 class="typing">IdentiFace AI</h1>
+    <p>Say Goodbye To Roll Calls and Hello To Smart Attendance with Identiface AI</p>
+  </div>
 
-<hi>IdentiFace AI </hi>
-<p> Attendance Made Simple with AI Face Recognition</p>
+</section>
 
+
+<section id="how-it-works" class="how-it-works">
+
+  <h2>IdentiFace AI in 3 Steps</h2>
+  <div class="steps">
+
+    <div class="step">
+      <span class="step-number">1</span>
+      <h3> Upload  </h3>
+      <p> Upload 3 classroom photos  at different angle</p>
+
+    </div>
+    
+    <div class="step">
+      <span class="step-number">2</span>
+      <h3> Detect  </h3>
+        <p>AI instantly identifies students and recognizes who’s present or absent.</p>
+
+    </div>
+    <div class="step">
+      <span class="step-number">3</span>
+      <h3> Record  </h3>
+    
+      <p>Attendance is automatically Recorded.
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="testimonials">
+  <h2>What Our Users Say</h2>
+  <div class="testimonials-cards">
+    <div class="testimonial-card">
+      <p class="testimonial-message">“Identiface has made my class management truly seamless and efficient.”</p>
+      <span class="testimonial-name">Lilian Kimani</span>
+      <span class="testimonial-title">Class Teacher</span>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-message">“It’s easy to use and totally secure. Highly recommend for every institution.”</p>
+      <span class="testimonial-name">Ezekiel Kombo</span>
+      <span class="testimonial-title">Administrator</span>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-message">“Managing attendance across the institution has never been simpler.”</p>
+      <span class="testimonial-name">Miriam Achiend</span>
+      <span class="testimonial-title">Institution Manager</span>
+    </div>
+  </div>
+</section>
+
+<!-- Footer Section -->
+<footer class="footer">
+  <div class="footer-main">
+    <nav class="footer-nav">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Testimonials</a></li>
+        <li><a href="#">How It Works</a></li>
+      </ul>
+    </nav>
+    <nav class="footer-policies">
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Data Protection</a></li>
+      </ul>
+    </nav>
+    <nav class="footer-social">
+      <ul>
+        <li><a href="#"><span class="social-icon-bg"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" class="social-icon"/></span></a></li>
+        <li><a href="#"><span class="social-icon-bg"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X (Twitter)" class="social-icon"/></span></a></li>
+        <li><a href="#"><span class="social-icon-bg"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" class="social-icon"/></span></a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="footer-copy">2025 Identiface. All rights reserved.</div>
+</footer>
 
 
 
