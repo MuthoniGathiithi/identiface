@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login form</title>
+
+
+    <style>
+
+       .body{
+        background-color: black;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height :100vh;
+
+          }
+
+    </style>
+</head>
+
+
+<body>
+    <div> 
+
+    <h1> Join IdentiFace </h1>
+
+     <form action="{% url 'login" method="post"    >
+    
+    <label for="email"> Email</label>
+    <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" placeholder="Enter password" required>
+    
+    <button type="submit">Login</button>
+
+     </form>
+    </div>
+
+</body>
+
+
+</html>
