@@ -9,6 +9,100 @@
 
 
 
+
+
+
+
+
+/* Main Background - Tech Grid */
+/*.landing-background {
+    background: #0a0a0a;
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+}
+
+/* Glowing Pulse Effect */
+
+
+/*@keyframes pulse {
+    0%, 100% { 
+        transform: translate(-50%, -50%) scale(1); 
+        opacity: 0.5; 
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.2); 
+        opacity: 0.8; 
+    }
+}
+*/
+/* Main Background - Tech Grid (FADED) */
+.landing-background {
+    background: #0a0a0a;
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),  /* Changed from 0.1 to 0.05 - MORE FADED */
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);  /* Changed from 0.1 to 0.05 - MORE FADED */
+    background-size: 50px 50px;
+}
+
+/* Filled Grid Cells - BOTTOM-LEFT (South-Left) */
+.landing-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    background-image: 
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01)),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02)),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02)),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01)),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.01)),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.01)),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.01));
+    background-size: 50px 50px;
+    background-position: 
+        /*50px calc(100% - 150px), */   /* Bottom-left area */  
+        200px calc(100% - 100px),   /* Bottom-left area */
+        100px calc(100% - 250px),   /* Bottom-left area */
+        250px calc(100% - 200px),   /* Bottom-left area */
+        150px calc(100% - 350px),   /* Bottom-left area */
+        50px calc(100% - 450px),    /* Bottom-left area */
+        300px calc(100% - 300px),   /* Bottom-left area */
+        200px calc(100% - 400px),   /* Bottom-left area */
+        100px calc(100% - 500px),   /* Bottom-left area */
+        250px calc(100% - 550px),   /* Bottom-left area */
+        150px calc(100% - 600px),   /* Bottom-left area */
+        50px calc(100% - 650px);    /* Bottom-left area */
+    background-repeat: no-repeat;
+    pointer-events: none;
+}
+
+/* Glowing Pulse Effect */
+@keyframes pulse {
+    0%, 100% { 
+        transform: translate(-50%, -50%) scale(1); 
+        opacity: 0.5; 
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.2); 
+        opacity: 0.8; 
+    }
+}
+
 .hero, .hero-text, .hero-image {
   position: relative;
   z-index: 1;
@@ -31,7 +125,7 @@ body {
 }
 
 .header {
-     background-color: rgba(255, 255, 255, 0);
+     background-color:transparent;
     font-family: poppins, sans-serif;
     position:sticky;
     top:0;
@@ -42,6 +136,12 @@ body {
     border-radius: 0;
     z-index: 100;
 
+}
+
+.logo h1 {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 700;
 }
 .container {
     display: flex;
@@ -65,7 +165,7 @@ body {
 }
 .navbar ul li a {
     text-decoration: none;
-    color: rgb(0, 0, 0);
+    color: white;
     font-weight: 500;
     transition: color 0.3s ease;
 
@@ -80,9 +180,9 @@ body {
 }
 
 .hero {
-  display: grid;
+  display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content:space-between;
   padding: 60px 100px;
   background:transparent;
   /* or something £background: linear-gradient(to right, #f5f7fa, #dbe8f6);like */
@@ -92,8 +192,9 @@ body {
   overflow: hidden;
   display: flex;
   text-align: center;
-  gap: 40px;
+  gap: 60px;
   place-items: start center;
+  flex-direction: row;
   
 }
 
@@ -140,22 +241,24 @@ body {
 
 
 .hero-text {
-  flex: 1;
+  flex: 2;
   max-width: 500px;
 }
 
 .hero-text h1 {
   font-size: 3.5rem;
-  color: black;
+  color:white ;
   font-weight: 700;
   margin-bottom: 20px;
 }
 
 .hero-text p {
-  font-size: 1.2rem;
-  color: black ;
-  line-height: 1.6;
-  margin-bottom: 30px;
+  font-size: 1.7rem;
+  color: white ;
+  line-height: 1.5;
+  white-space: nowrap;
+  /*margin-bottom: 30px;*/
+  margin-left: -224px;
 }
 
 .cta-btn {
@@ -182,7 +285,7 @@ body {
 
 .hero-image img {
   width: 70%;
-  max-width: 320px;
+  max-width: 420px;
   border-radius: 20px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
   transition: transform 0.4s ease;
@@ -306,43 +409,56 @@ background: #f8fafd;
   background: rgba(0, 0, 0, 0.50);
 }*/
 
+
+
+
+
+/* Container for two-column layout */
+.how-it-works-container {
+  display: flex;
+  gap: 0;
+  max-width: 1400px;
+  margin: 0 auto;
+  align-items: stretch;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Left side - White background with content */
+.steps-container {
+  flex: 1;
+  background: #ffffff;
+  padding: 60px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .how-it-works h2 {
-  font-size: 2.8rem;
+  font-size: 2.5rem;
   font-weight: 700;
   color: #2a2a72;
-  text-align: center;
-  margin-bottom: 60px;
+  text-align: left;
+  margin-bottom: 40px;
   position: relative;
   z-index: 1;
 }
 
-.how-it-works h2::after {
-  content: '';
-  display: block;
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, #5450d6, #8b87ff);
-  margin: 16px auto 0;
-  border-radius: 2px;
-}
-
 .steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
   z-index: 1;
 }
 
 .step {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 40px 32px;
-  box-shadow: 0 4px 20px rgba(84, 80, 214, 0.12);
+  background: #f8f9fb;
+  border-radius: 12px;
+  padding: 25px 30px;
+  box-shadow: 0 2px 8px rgba(84, 80, 214, 0.08);
   position: relative;
-  border: 1px solid rgba(84, 80, 214, 0.1);
+  border-left: 4px solid #5450d6;
 }
 
 .step h3 {
@@ -355,24 +471,6 @@ background: #f8fafd;
   padding-left: 0px;
 }
 
-/*.step h3::before {
-  content: attr(data-step);
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
-  background: #5450d6;
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  font-weight: 700;
-  box-shadow: 0 4px 12px rgba(84, 80, 214, 0.3);
-}*/
 
 
 
@@ -383,25 +481,34 @@ background: #f8fafd;
   margin: 0;
 }
 
-/* Connecting lines between steps (desktop only) */
-@media (min-width: 1024px) {
-  .steps::before {
-    content: '';
-    position: absolute;
-    top: 70px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 70%;
-    height: 2px;
-    background: linear-gradient(90deg, 
-      transparent 0%, 
-      rgba(84, 80, 214, 0.3) 15%, 
-      rgba(84, 80, 214, 0.3) 85%, 
-      transparent 100%
-    );
-    z-index: 0;
-  }
+
+/* Right side - Image with dark overlay */
+.how-it-works-image {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-height: 600px;
 }
+
+.how-it-works-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(84, 80, 214, 0.6);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Connecting lines removed for vertical layout */
 
 /* Responsive Design */
 @media (max-width: 1024px) {
@@ -414,9 +521,8 @@ background: #f8fafd;
     margin-bottom: 40px;
   }
 
-  .steps {
-    grid-template-columns: 1fr;
-    gap: 30px;
+  .how-it-works-container {
+    flex-direction: column;
   }
 }
 
@@ -465,33 +571,6 @@ background: #f8fafd;
 .step p {
   text-align: center;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -600,6 +679,10 @@ background: #f8fafd;
 
 
 <body>
+
+<div class="landing-background">
+    <div class="glow"></div>
+  
     <header class="header">
         <div class="container">
             <div class="logo">
@@ -622,83 +705,53 @@ background: #f8fafd;
   <div class="hero-text">
     <h1 class="typing">IdentiFace AI</h1>
     <p>Say Goodbye To Roll Calls and Hello To Smart Attendance with Identiface AI</p>
+
+
   </div>
+
+  <div class="hero-image">
+     <img src="{% static 'face_recognition/images/Dashboard(1).png' %}" alt="Dashboard Preview">
+   </div>
 
 </section>
 
+</div>
 
 <section id="how-it-works" class="how-it-works">
-
-  <h2>IdentiFace AI in 3 Steps</h2>
-  <div class="steps">
-
-    <div class="step">
-      <span class="step-number">1</span>
-      <h3> Upload  </h3>
-      <p> Upload 3 classroom photos  at different angle</p>
-
+  <div class="how-it-works-container">
+    <!-- Left side: Title + Steps (raised white card) -->
+    <div class="steps-container">
+      <h2>IdentiFace AI in 3 Steps</h2>
+      
+      <div class="steps">
+        <div class="step">
+          <span class="step-number">1</span>
+          <h3>Upload</h3>
+          <p>Upload 3 classroom photos at different angle</p>
+        </div>
+        
+        <div class="step">
+          <span class="step-number">2</span>
+          <h3>Detect</h3>
+          <p>AI instantly identifies students and recognizes who's present or absent.</p>
+        </div>
+        
+        <div class="step">
+          <span class="step-number">3</span>
+          <h3>Record</h3>
+          <p>Attendance is automatically Recorded.</p>
+        </div>
+      </div>
     </div>
     
-    <div class="step">
-      <span class="step-number">2</span>
-      <h3> Detect  </h3>
-        <p>AI instantly identifies students and recognizes who’s present or absent.</p>
-
+    <!-- Right side: Image with overlay -->
+    <div class="how-it-works-image">
+      <div class="image-overlay"></div>
+      <img src="{% static 'face_recognition/images/aigen.jpg' %}" alt="How it works">
     </div>
-    <div class="step">
-      <span class="step-number">3</span>
-      <h3> Record  </h3>
-    
-      <p>Attendance is automatically Recorded.
-
-    </div>
-
   </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      
 
 
 
@@ -719,8 +772,8 @@ background: #f8fafd;
     </div>
     <div class="testimonial-card">
       <p class="testimonial-message">“Managing attendance across the institution has never been simpler.”</p>
-      <span class="testimonial-name">Miriam Achiend</span>
-      <span class="testimonial-title">Institution Manager</span>
+      <span class="testimonial-name">Miriam Achieng</span>
+      <span class="testimonial-title">Lecturer</span>
     </div>
   </div>
 </section>
