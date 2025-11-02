@@ -14,32 +14,8 @@
 
 
 
-/* Main Background - Tech Grid */
-/*.landing-background {
-    background: #0a0a0a;
-    position: relative;
-    min-height: 100vh;
-    width: 100%;
-    background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
-}
-
-/* Glowing Pulse Effect */
 
 
-/*@keyframes pulse {
-    0%, 100% { 
-        transform: translate(-50%, -50%) scale(1); 
-        opacity: 0.5; 
-    }
-    50% { 
-        transform: translate(-50%, -50%) scale(1.2); 
-        opacity: 0.8; 
-    }
-}
-*/
 /* Main Background - Tech Grid (FADED) */
 .landing-background {
     background: #0a0a0a;
@@ -47,49 +23,11 @@
     min-height: 100vh;
     width: 100%;
     background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),  /* Changed from 0.1 to 0.05 - MORE FADED */
+        linear-gradient(rgba(255, 255, 255, 0.05) 0.5px, transparent 1px),  /* Changed from 0.1 to 0.05 - MORE FADED */
         linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);  /* Changed from 0.1 to 0.05 - MORE FADED */
     background-size: 50px 50px;
 }
 
-/* Filled Grid Cells - BOTTOM-LEFT (South-Left) */
-.landing-background::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 10px;
-    background-image: 
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01)),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02)),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02)),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01)),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.01)),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.01)),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.01));
-    background-size: 50px 50px;
-    background-position: 
-        /*50px calc(100% - 150px), */   /* Bottom-left area */  
-        200px calc(100% - 100px),   /* Bottom-left area */
-        100px calc(100% - 250px),   /* Bottom-left area */
-        250px calc(100% - 200px),   /* Bottom-left area */
-        150px calc(100% - 350px),   /* Bottom-left area */
-        50px calc(100% - 450px),    /* Bottom-left area */
-        300px calc(100% - 300px),   /* Bottom-left area */
-        200px calc(100% - 400px),   /* Bottom-left area */
-        100px calc(100% - 500px),   /* Bottom-left area */
-        250px calc(100% - 550px),   /* Bottom-left area */
-        150px calc(100% - 600px),   /* Bottom-left area */
-        50px calc(100% - 650px);    /* Bottom-left area */
-    background-repeat: no-repeat;
-    pointer-events: none;
-}
 
 /* Glowing Pulse Effect */
 @keyframes pulse {
@@ -187,12 +125,12 @@ body {
   background:transparent;
   /* or something £background: linear-gradient(to right, #f5f7fa, #dbe8f6);like */
   min-height: 90vh;
-  font-family: 'Poppins', sans-serif;
+  /*font-family: 'Poppins', sans-serif;*/
   position: relative;
   overflow: hidden;
   display: flex;
   text-align: center;
-  gap: 60px;
+  gap: 80px;
   place-items: start center;
   flex-direction: row;
   
@@ -243,22 +181,25 @@ body {
 .hero-text {
   flex: 2;
   max-width: 500px;
+  margin-top: 100px;
 }
 
 .hero-text h1 {
-  font-size: 3.5rem;
-  color:white ;
-  font-weight: 700;
+  font-size: 4.5rem;
+  color: #5450d6;
+  
+  font-weight: 1200;
   margin-bottom: 20px;
+  margin-top:auto;
 }
 
 .hero-text p {
-  font-size: 1.7rem;
-  color: white ;
+  font-size: 1.9rem;
+  color: white;
   line-height: 1.5;
-  white-space: nowrap;
-  /*margin-bottom: 30px;*/
-  margin-left: -224px;
+  margin-bottom: 30px;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  
 }
 
 .cta-btn {
