@@ -1,0 +1,642 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Enrollment - {{ class.title }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #148324 0%, #106a1c 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+        
+        .class-badge {
+            display: inline-block;
+            background: #148324;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #148324;
+        }
+        
+        .camera-section {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        #video-container {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto 20px;
+            border-radius: 12px;
+            overflow: visible;
+            background: #000;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            min-height: 375px;
+        }
+        
+        #webcam {
+            width: 100%;
+            display: block;
+        }
+        
+        #canvas {
+            display: none;
+        }
+        
+        .pose-overlay {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 700;
+            z-index: 1000;
+            display: block;
+            visibility: visible;
+            pointer-events: none;
+        }
+        
+        .pose-overlay.ready {
+            background: #148324;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #148324, #10b981);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .pose-list {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .pose-item {
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .pose-item.captured {
+            background: #148324;
+            border-color: #148324;
+            color: white;
+        }
+        
+        .btn {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: #148324;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #106a1c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(20, 131, 36, 0.3);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .status-message {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .status-message.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+        
+        .status-message.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+        
+        .status-message.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #3b82f6;
+        }
+        
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .instructions h3 {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .instructions ul {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="{% static 'face_recognition/images/logo.png' %}" alt="Identiface Logo">
+            <h1>Welcome to Identiface</h1>
+            <p>Student Self-Enrollment</p>
+            <div class="class-badge">{{ class.title }}</div>
+        </div>
+        
+        <div class="content">
+            <div class="instructions">
+                <h3>📋 Enrollment Instructions</h3>
+                <ul>
+                    <li>Fill in your details below</li>
+                    <li>Click "Start Enrollment" to begin face capture</li>
+                    <li>Follow the on-screen pose instructions</li>
+                    <li>The system will capture your face from different angles</li>
+                    <li>Once complete, click "Complete Enrollment"</li>
+                </ul>
+            </div>
+            
+            <form id="enrollment-form">
+                <div class="form-group">
+                    <label for="student-name">Full Name *</label>
+                    <input type="text" id="student-name" name="name" required placeholder="Enter your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="student-id">Student ID *</label>
+                    <input type="text" id="student-id" name="student_id" required placeholder="Enter your student ID">
+                </div>
+                
+                <div class="form-group">
+                    <label for="student-email">Email (Optional)</label>
+                    <input type="email" id="student-email" name="email" placeholder="your.email@example.com">
+                </div>
+            </form>
+            
+            <div class="camera-section">
+                <h3 style="margin-bottom: 20px; color: #333;">📸 Face Capture</h3>
+                
+                <div id="status-message" class="status-message"></div>
+                
+                <div id="video-container">
+                    <video id="webcam" autoplay playsinline></video>
+                    <div id="pose-overlay" class="pose-overlay">Initializing camera...</div>
+                </div>
+                
+                <canvas id="canvas"></canvas>
+                
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                
+                <div class="pose-list">
+                    <span class="pose-item" id="pose-front">👤 Front</span>
+                    <span class="pose-item" id="pose-left">◀️ Turn Left</span>
+                    <span class="pose-item" id="pose-right">▶️ Turn Right</span>
+                    <span class="pose-item" id="pose-down">⬇️ Look Down</span>
+                </div>
+                
+                <div class="button-group">
+                    <button type="button" id="start-btn" class="btn btn-primary" onclick="startEnrollment()">
+                        🚀 Start Enrollment
+                    </button>
+                    <button type="button" id="submit-btn" class="btn btn-primary" onclick="submitEnrollment()" disabled>
+                        ✅ Complete Enrollment
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const enrollmentCode = "{{ class.enrollment_code }}";
+        const className = "{{ class.title }}";
+        const apiUrl = "{{ FACE_API_URL|default:'http://localhost:8001' }}";  // Face service API
+        
+        let webcamStream = null;
+        let enrollmentActive = false;
+        let captureInterval = null;
+        let userId = null;
+        let capturedPoses = new Set();
+        
+        // Initialize webcam
+        async function initWebcam() {
+            try {
+                webcamStream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { width: 640, height: 480 } 
+                });
+                document.getElementById('webcam').srcObject = webcamStream;
+                updateStatus('Camera ready! Fill in your details and click "Start Enrollment"', 'info');
+            } catch (error) {
+                updateStatus('Failed to access camera: ' + error.message, 'error');
+            }
+        }
+        
+        // Start enrollment process
+        async function startEnrollment() {
+            const name = document.getElementById('student-name').value.trim();
+            const studentId = document.getElementById('student-id').value.trim();
+            
+            if (!name || !studentId) {
+                updateStatus('Please fill in your name and student ID', 'error');
+                return;
+            }
+            
+            // Encode user ID to handle special characters like slashes
+            userId = encodeURIComponent(studentId);
+            console.log('Original student ID:', studentId);
+            console.log('Encoded user ID:', userId);
+            
+            // First, try to cancel any existing session
+            try {
+                const cancelResponse = await fetch(`${apiUrl}/enroll/cancel/${userId}`, { method: 'POST' });
+                const cancelData = await cancelResponse.json();
+                console.log('Cancel response:', cancelData);
+                // Wait a bit for cleanup
+                await new Promise(resolve => setTimeout(resolve, 500));
+            } catch (e) {
+                console.log('No existing session to cancel:', e);
+            }
+            
+            // Start enrollment session with FastAPI
+            try {
+                console.log('Starting enrollment for user:', userId);
+                const response = await fetch(`${apiUrl}/enroll/start`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: userId })
+                });
+                
+                console.log('Response status:', response.status);
+                const data = await response.json();
+                console.log('Response data:', data);
+                
+                if (data.success) {
+                    enrollmentActive = true;
+                    document.getElementById('start-btn').disabled = true;
+                    updateStatus('Enrollment started! Follow the pose instructions on screen', 'success');
+                    
+                    // Start sending frames
+                    captureInterval = setInterval(sendFrame, 500);
+                } else {
+                    updateStatus('Failed to start enrollment: ' + data.message, 'error');
+                }
+            } catch (error) {
+                console.error('Enrollment start error:', error);
+                updateStatus('Error connecting to face service. Please ensure the service is running.', 'error');
+            }
+        }
+        
+        // Capture and send frame to FastAPI
+        async function sendFrame() {
+            if (!enrollmentActive) {
+                console.log('Enrollment not active, skipping frame');
+                return;
+            }
+            
+            console.log('Capturing and sending frame...');
+            
+            const video = document.getElementById('webcam');
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0);
+            
+            // Convert canvas to blob
+            canvas.toBlob(async (blob) => {
+                const formData = new FormData();
+                formData.append('file', blob, 'frame.jpg');
+                
+                try {
+                    const response = await fetch(`${apiUrl}/enroll/process-frame/${userId}`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    if (!response.ok) {
+                        console.error('Frame processing failed:', response.status, response.statusText);
+                        return;
+                    }
+                    
+                    const data = await response.json();
+                    console.log('Frame processed:', data);
+                    handleFrameResponse(data);
+                } catch (error) {
+                    console.error('Frame processing error:', error);
+                    updateStatus('Error processing frame. Check console for details.', 'error');
+                }
+            }, 'image/jpeg');
+        }
+        
+        // Handle response from frame processing
+        function handleFrameResponse(data) {
+            console.log('handleFrameResponse called:', data);
+            const overlay = document.getElementById('pose-overlay');
+            
+            if (!overlay) {
+                console.error('pose-overlay element not found!');
+                return;
+            }
+            
+            if (data.status === 'ready') {
+                overlay.textContent = '✓ Hold still...';
+                overlay.classList.add('ready');
+            } else if (data.status === 'waiting') {
+                overlay.textContent = data.message || 'Position your face';
+                overlay.classList.remove('ready');
+            } else if (data.status === 'no_face') {
+                overlay.textContent = '❌ No face detected';
+                overlay.classList.remove('ready');
+            } else if (data.status === 'multiple_faces') {
+                overlay.textContent = '⚠️ Multiple faces detected';
+                overlay.classList.remove('ready');
+            } else if (data.status === 'poor_quality') {
+                overlay.textContent = '⚠️ Poor image quality';
+                overlay.classList.remove('ready');
+            } else if (data.status === 'no_keypoints') {
+                overlay.textContent = '⚠️ Facial landmarks missing - improve lighting';
+                overlay.classList.remove('ready');
+            } else if (data.status === 'complete') {
+                overlay.textContent = '✅ Enrollment complete!';
+                overlay.classList.add('ready');
+                completeCapture();
+            } else if (data.feedback) {
+                overlay.textContent = data.feedback;
+                overlay.classList.remove('ready');
+            }
+            
+            // Always update progress if available
+            if (data.progress) {
+                console.log('Updating progress:', data.progress);
+                const progress = data.progress;
+                
+                // Update captured poses
+                Object.keys(progress.poses_captured).forEach(pose => {
+                    if (progress.poses_captured[pose]) {
+                        capturedPoses.add(pose);
+                        const poseElement = document.getElementById(`pose-${pose.toLowerCase()}`);
+                        if (poseElement) {
+                            console.log(`Marking pose ${pose} as captured`);
+                            poseElement.classList.add('captured');
+                        } else {
+                            console.warn(`Pose element not found: pose-${pose.toLowerCase()}`);
+                        }
+                    }
+                });
+                
+                // Update progress bar
+                const progressPercent = (progress.poses_captured_count / progress.total_poses_required) * 100;
+                document.getElementById('progress-fill').style.width = progressPercent + '%';
+                
+                // Check if complete
+                if (progress.complete) {
+                    console.log('✅ All poses captured!');
+                    completeCapture();
+                } else {
+                    console.log(`Progress: ${progress.poses_captured_count}/${progress.total_poses_required} poses captured`);
+                }
+            }
+            
+            // Log if pose was captured
+            if (data.captured) {
+                console.log('✓ Pose captured!', data.progress);
+            }
+        }
+        
+        // Complete capture process
+        function completeCapture() {
+            clearInterval(captureInterval);
+            enrollmentActive = false;
+            document.getElementById('submit-btn').disabled = false;
+            updateStatus('🎉 All poses captured! Click "Complete Enrollment" to finish', 'success');
+        }
+        
+        // Submit enrollment
+        async function submitEnrollment() {
+            const name = document.getElementById('student-name').value.trim();
+            const studentId = document.getElementById('student-id').value.trim();
+            const email = document.getElementById('student-email').value.trim();
+            
+            updateStatus('Processing enrollment...', 'info');
+            
+            try {
+                // Complete enrollment in FastAPI
+                const response = await fetch(`${apiUrl}/enroll/complete/${userId}`, {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Save to Django database
+                    const saveResponse = await fetch(window.location.href, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        body: JSON.stringify({
+                            name: name,
+                            student_id: studentId,
+                            email: email
+                        })
+                    });
+                    
+                    const saveData = await saveResponse.json();
+                    
+                    if (saveData.success) {
+                        updateStatus('✅ Enrollment successful! Welcome to ' + className, 'success');
+                        document.getElementById('submit-btn').disabled = true;
+                        
+                        // Stop webcam
+                        if (webcamStream) {
+                            webcamStream.getTracks().forEach(track => track.stop());
+                        }
+                        
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 3000);
+                    } else {
+                        updateStatus('Error: ' + saveData.error, 'error');
+                    }
+                } else {
+                    updateStatus('Failed to complete enrollment: ' + data.message, 'error');
+                }
+            } catch (error) {
+                updateStatus('Error completing enrollment: ' + error.message, 'error');
+            }
+        }
+        
+        // Update status message
+        function updateStatus(message, type) {
+            const statusEl = document.getElementById('status-message');
+            statusEl.textContent = message;
+            statusEl.className = 'status-message ' + type;
+            statusEl.style.display = 'block';
+        }
+        
+        // Get CSRF token
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        
+        // Initialize on page load
+        window.onload = initWebcam;
+        
+        // Cleanup on page unload
+        window.onbeforeunload = function() {
+            if (webcamStream) {
+                webcamStream.getTracks().forEach(track => track.stop());
+            }
+            if (enrollmentActive && userId) {
+                fetch(`${apiUrl}/enroll/cancel/${userId}`, { method: 'POST' });
+            }
+        };
+    </script>
+</body>
+</html>
