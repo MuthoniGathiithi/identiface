@@ -5,17 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Identiface Landing Page</title>
+
 <style>
-
-
-
-
-
-
-
-
-
-
 /* Main Background - Tech Grid (FADED) */
 .landing-background {
     background: #0a0a0a;
@@ -76,6 +67,13 @@ body {
 
 }
 
+.logo img {
+    height: 120px;
+    width: auto;
+    display: flex;
+    margin-right: 20px;
+}
+
 .logo h1 {
     color: white;
     font-size: 1.8rem;
@@ -86,8 +84,7 @@ body {
     justify-content:space-between;
     align-items: center;
     padding: 15px 40px;
-    margin  :   auto;
-    max-width: 1200px;
+    max-width: 1400px;
 
 
 }
@@ -103,7 +100,7 @@ body {
 }
 .navbar ul li a {
     text-decoration: none;
-    color: white;
+    color:  #7CB342;
     font-weight: 500;
     transition: color 0.3s ease;
 
@@ -186,7 +183,7 @@ body {
 
 .hero-text h1 {
   font-size: 4.5rem;
-  color: #5450d6;
+  color: #7CB342;
   
   font-weight: 1200;
   margin-bottom: 20px;
@@ -198,7 +195,7 @@ body {
   color: white;
   line-height: 1.5;
   margin-bottom: 30px;
-  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold';
   
 }
 
@@ -245,7 +242,7 @@ background: #f8fafd;
 .testimonials h2 {
   font-size: 2rem;
   font-weight: 700;
-  color: #2a2a72;
+  color:  #7CB342;
   margin-bottom: 32px;
   font-family: 'Poppins', sans-serif;
 }
@@ -274,7 +271,8 @@ background: #f8fafd;
 .testimonial-name {
   display: block;
   font-weight: 600;
-  color: #5450d6;
+  color:#148324;
+  
   letter-spacing: 0.6px;
   margin-bottom: 0px;
 }
@@ -309,7 +307,8 @@ background: #f8fafd;
 }
 
 .social-icon-bg:hover {
-  background: #5450d6; /* or the actual brand color! */
+
+  background: #148324; /* or the actual brand color! */
 }
 
 .footer-social a {
@@ -358,10 +357,10 @@ background: #f8fafd;
 .how-it-works-container {
   display: flex;
   gap: 0;
-  max-width: 1400px;
+  max-width: 2000px;
   margin: 0 auto;
   align-items: stretch;
-  border-radius: 20px;
+  border-radius: 1px;
   overflow: hidden;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 }
@@ -379,7 +378,7 @@ background: #f8fafd;
 .how-it-works h2 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #2a2a72;
+  color:#148324;
   text-align: left;
   margin-bottom: 40px;
   position: relative;
@@ -389,7 +388,7 @@ background: #f8fafd;
 .steps {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 0;
   z-index: 1;
 }
 
@@ -399,13 +398,30 @@ background: #f8fafd;
   padding: 25px 30px;
   box-shadow: 0 2px 8px rgba(84, 80, 214, 0.08);
   position: relative;
-  border-left: 4px solid #5450d6;
+  border-left: 4px solid #148324;
+  margin-bottom: 25px;
+}
+
+.step:not(:last-child)::after {
+  content: '↓';
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  color: #148324;
+  font-weight: 300;
+  z-index: 2;
+}
+
+.step:last-child {
+  margin-bottom: 0;
 }
 
 .step h3 {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #2a2a72;
+  color:#148324;
   margin-bottom: 16px;
   text-transform: capitalize;
   position: relative;
@@ -436,6 +452,8 @@ background: #f8fafd;
   height: 100%;
   object-fit: cover;
   display: block;
+  position: relative;
+  z-index: 0;
 }
 
 .image-overlay {
@@ -444,7 +462,7 @@ background: #f8fafd;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(84, 80, 214, 0.6);
+  background: rgba(20, 131, 36, 0.5);
   z-index: 1;
   pointer-events: none;
 }
@@ -496,7 +514,7 @@ background: #f8fafd;
   margin-bottom: 18px;
   width: 44px;
   height: 44px;
-  background: #5450d6c2;
+  background:#148324;
   color: #fff;
   font-size: 1.3rem;
   font-weight: 700;
@@ -627,7 +645,7 @@ background: #f8fafd;
     <header class="header">
         <div class="container">
             <div class="logo">
-                <h1>Identiface</h1>
+                <img src="{% static 'face_recognition/images/logo.png' %}" alt="">
             </div>
 
             <nav class="navbar">
