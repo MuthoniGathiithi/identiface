@@ -472,30 +472,42 @@
                 return;
             }
             
+            // Handle different status codes with detailed feedback
             if (data.status === 'ready') {
-                overlay.textContent = '✓ Hold still...';
+                overlay.textContent = `✓ ${data.feedback || 'Capturing...'}`;
                 overlay.classList.add('ready');
+                updateStatus('Face detected and captured!', 'success');
             } else if (data.status === 'waiting') {
-                overlay.textContent = data.message || 'Position your face';
+                const message = data.feedback || data.message || 'Adjust your position';
+                overlay.textContent = message;
                 overlay.classList.remove('ready');
+                updateStatus(message, 'info');
             } else if (data.status === 'no_face') {
                 overlay.textContent = '❌ No face detected';
                 overlay.classList.remove('ready');
+                updateStatus('No face detected. Please position your face in the frame.', 'error');
             } else if (data.status === 'multiple_faces') {
-                overlay.textContent = '⚠️ Multiple faces detected';
+                overlay.textContent = '⚠️ Only one person allowed';
                 overlay.classList.remove('ready');
+                updateStatus('Multiple faces detected. Please ensure only one person is visible.', 'error');
             } else if (data.status === 'poor_quality') {
-                overlay.textContent = '⚠️ Poor image quality';
+                const issues = data.quality?.issues?.join(', ') || 'image quality';
+                overlay.textContent = `⚠️ ${data.feedback || 'Adjust ' + issues}`;
                 overlay.classList.remove('ready');
+                updateStatus(data.message || data.feedback || 'Improve lighting and try again', 'error');
             } else if (data.status === 'no_keypoints') {
-                overlay.textContent = '⚠️ Facial landmarks missing - improve lighting';
+                overlay.textContent = '⚠️ Improve lighting/angle';
                 overlay.classList.remove('ready');
+                updateStatus('Face detected but details unclear. Try better lighting.', 'error');
             } else if (data.status === 'complete') {
                 overlay.textContent = '✅ Enrollment complete!';
                 overlay.classList.add('ready');
                 completeCapture();
             } else if (data.feedback) {
                 overlay.textContent = data.feedback;
+                overlay.classList.add(data.status === 'ready' ? 'ready' : '');
+            } else {
+                overlay.textContent = 'Processing...';
                 overlay.classList.remove('ready');
             }
             
@@ -522,18 +534,20 @@
                 const progressPercent = (progress.poses_captured_count / progress.total_poses_required) * 100;
                 document.getElementById('progress-fill').style.width = progressPercent + '%';
                 
+                // Show progress message
+                const currentRequired = progress.current_pose ? progress.current_pose.toUpperCase() : 'UNKNOWN';
+                console.log(`Progress: ${progress.poses_captured_count}/${progress.total_poses_required} poses captured. Next: ${currentRequired}`);
+                
                 // Check if complete
                 if (progress.complete) {
                     console.log('✅ All poses captured!');
                     completeCapture();
-                } else {
-                    console.log(`Progress: ${progress.poses_captured_count}/${progress.total_poses_required} poses captured`);
                 }
             }
             
             // Log if pose was captured
             if (data.captured) {
-                console.log('✓ Pose captured!', data.progress);
+                console.log('✓ Pose captured successfully!');
             }
         }
         
@@ -601,6 +615,38 @@
             }
         }
         
+        // Cleanup video stream
+        function cleanupWebcam() {
+            try {
+                if (webcamStream) {
+                    webcamStream.getTracks().forEach(track => {
+                        track.stop();
+                    });
+                    webcamStream = null;
+                    console.log('Webcam cleaned up successfully');
+                }
+            } catch (error) {
+                console.error('Error cleaning up webcam:', error);
+            }
+        }
+        
+        // Cancel enrollment safely
+        function cancelEnrollmentSafely() {
+            try {
+                clearInterval(captureInterval);
+                enrollmentActive = false;
+                if (userId) {
+                    // Send cancel request (don't wait for response)
+                    fetch(`${apiUrl}/enroll/cancel/${userId}`, { 
+                        method: 'POST' 
+                    }).catch(e => console.log('Cancel request failed (expected)', e));
+                }
+                cleanupWebcam();
+            } catch (error) {
+                console.error('Error during cancellation:', error);
+            }
+        }
+        
         // Update status message
         function updateStatus(message, type) {
             const statusEl = document.getElementById('status-message');
@@ -626,17 +672,19 @@
         }
         
         // Initialize on page load
-        window.onload = initWebcam;
+        window.addEventListener('load', initWebcam);
         
-        // Cleanup on page unload
-        window.onbeforeunload = function() {
-            if (webcamStream) {
-                webcamStream.getTracks().forEach(track => track.stop());
+        // Cleanup on page unload/visibility change
+        window.addEventListener('beforeunload', cancelEnrollmentSafely);
+        
+        // Also cleanup when page becomes hidden
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden && enrollmentActive) {
+                console.log('Page hidden, pausing enrollment');
+                clearInterval(captureInterval);
+                enrollmentActive = false;
             }
-            if (enrollmentActive && userId) {
-                fetch(`${apiUrl}/enroll/cancel/${userId}`, { method: 'POST' });
-            }
-        };
+        });
     </script>
 </body>
 </html>
