@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-r3%5(kzc5&!i_*mom7!cor9_fsf%mx6+p==p9(c)@0jo(^zts7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1', '0.0.0.0']
 
 
 # Application definition
@@ -129,3 +129,25 @@ LOGOUT_REDIRECT_URL = 'landing_page'
 
 # Face Recognition API Configuration
 FACE_API_URL = 'http://localhost:8001'  # FastAPI face service URL
+
+# CORS Settings for cross-origin requests from frontend
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+    "http://localhost:3000",
+    "http://127.0.0.1:8000",
+    "http://0.0.0.0:8000",
+]
+
+# Allow all for development (restrict in production)
+CORS_ALLOW_ALL_ORIGINS = True
+
+# Additional security settings for development
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8000',
+    'http://localhost:3000',
+    'http://127.0.0.1:8000',
+]
+
+# File upload settings
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
